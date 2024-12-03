@@ -7,9 +7,16 @@ int **criacao(int num_categorias);
 int main() {
   int **vendas, num_categorias;
   scanf("%d", &num_categorias); 
+
+  if(num_categorias == 0) {
+    printf("vazio");
+  }
+  else {
+    vendas = criacao(num_categorias);
+    imprime_histograma(vendas, num_categorias); 
+  }
   
-  vendas = criacao(num_categorias);
-  imprime_histograma(vendas, num_categorias); 
+  
 
   return 0;
 }
