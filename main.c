@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int imprime_histograma (int **vendas, int num_categorias);
-int **criacao(int num_categorias);
+int **histograma_criacao(int num_categorias);
+int histograma_imprime (int **vendas, int num_categorias);
+void histograma_destroy(int num_categorias, int **vendas);
 
 int main() {
   int **vendas, num_categorias;
@@ -12,16 +13,27 @@ int main() {
     printf("vazio");
   }
   else {
-    vendas = criacao(num_categorias);
-    imprime_histograma(vendas, num_categorias); 
+    vendas = histograma_criacao(num_categorias);
+    histograma_imprime(vendas, num_categorias); 
+    histograma_destroy(num_categorias, vendas);
   }
-  
-  
-
   return 0;
 }
 
-int imprime_histograma (int **vendas, int num_categorias) {
+int **histograma_criacao(int num_categorias) {
+    int **vendas;
+    
+    vendas = (int **) malloc(num_categorias * sizeof(int *)); 
+
+    for(int i = 0; i < num_categorias; i++) {
+    vendas[i] = (int *) malloc(num_categorias * sizeof(int)); 
+    scanf("%d", vendas[i]);
+  }
+  
+  return vendas;
+}
+
+int histograma_imprime (int **vendas, int num_categorias) {
   for(int i = 0; i < num_categorias; i++) {
     printf("%d ", *vendas[i]); //imprime a qntdd ao lado dos *
     
@@ -39,15 +51,9 @@ int imprime_histograma (int **vendas, int num_categorias) {
   return 0;
 }
 
-int **criacao(int num_categorias) {
-    int **vendas;
-    
-    vendas = (int **) malloc(num_categorias * sizeof(int *)); 
-
-    for(int i = 0; i < num_categorias; i++) {
-    vendas[i] = (int *) malloc(num_categorias * sizeof(int)); 
-    scanf("%d", vendas[i]);
+void histograma_destroy(int num_categorias, int **vendas) {
+  for(int i = 0; i < num_categorias; i++) {
+    free(vendas[i]);
   }
-  
-  return vendas;
+  free(vendas);
 }
